@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import InputText from 'phaser3-rex-plugins/plugins/inputtext.js';
 
-/* import * as road from './../assets/images/background/road.png' */
+import * as background from './../assets/images/background.png'
 //import * as racing_mp3 from './../assets/audio/racing.mp3'
 /* import * as race_car from './../assets/images/race_car.png' */
 
@@ -29,7 +29,7 @@ export class GameScene extends Phaser.Scene {
     private gameManager: any;
     private players: any;
 
-    public road: Phaser.GameObjects.TileSprite;
+    public background: Phaser.GameObjects.TileSprite;
 
     private keyW: Phaser.Input.Keyboard.Key;
     private keyA: Phaser.Input.Keyboard.Key;
@@ -43,7 +43,7 @@ export class GameScene extends Phaser.Scene {
     }
 
     preload(): void {
-        /* this.load.image('road', road); */
+        this.load.image('background', background);
         /* this.load.image('player', race_car); */
         //this.load.audio('music', [music]);
 
@@ -62,7 +62,7 @@ export class GameScene extends Phaser.Scene {
 
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
 
-        this.road = this.add.tileSprite(0, 0, 1600, 768, 'road').setOrigin(0);
+        this.background = this.add.tileSprite(0, 0, 1600, 768, 'background').setOrigin(0);
 
         this.add.text(30, 30, 'Session:', { font: '22px Calibri' });
 
