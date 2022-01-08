@@ -54,25 +54,54 @@ function create() {
                 var session = socket.id;
 
                 var session_positions = [];
+                var session_colors = [];
                 
-                if (data.number_of_players == 1)
+                if (data.number_of_players == 1) {
                     session_positions = [
-                        { x: self.cameras.main.worldView.x + self.cameras.main.width / 2, y: y_position }
+                        {
+                            x: self.cameras.main.worldView.x + self.cameras.main.width / 2,
+                            y: self.cameras.main.worldView.y + self.cameras.main.height / 2
+                        }
                     ]
+
+                    session_colors.push(colors[0])
+                }
                 
                 if (data.number_of_players == 2) {
                     session_positions = [
-                        { x: self.cameras.main.worldView.x + self.cameras.main.width / 2 - 150, y: y_position },
-                        { x: self.cameras.main.worldView.x + self.cameras.main.width / 2 + 150, y: y_position }
+                        {
+                            x: self.cameras.main.worldView.x + 50,
+                            y: self.cameras.main.worldView.y + self.cameras.main.height / 2
+                        },
+                        {
+                            x: self.cameras.main.worldView.x + self.cameras.main.width - 50,
+                            y: self.cameras.main.worldView.y + self.cameras.main.height / 2
+                        }
                     ]
+
+                    session_colors.push(colors[0])
+                    session_colors.push(colors[1])
                 }
 
                 if (data.number_of_players == 3) {
                     session_positions = [
-                        { x: self.cameras.main.worldView.x + self.cameras.main.width / 2, y: y_position },
-                        { x: self.cameras.main.worldView.x + self.cameras.main.width / 2 - 200, y: y_position },
-                        { x: self.cameras.main.worldView.x + self.cameras.main.width / 2 + 200, y: y_position }
+                        {
+                            x: self.cameras.main.worldView.x + 100,
+                            y: self.cameras.main.worldView.y + self.cameras.main.height -100
+                        },
+                        {
+                            x: self.cameras.main.worldView.x + self.cameras.main.width - 100,
+                            y: self.cameras.main.worldView.y + self.cameras.main.height - 100
+                        },
+                        {
+                            x: self.cameras.main.worldView.x + self.cameras.main.width / 2,
+                            y: self.cameras.main.worldView.y + 100
+                        }
                     ]
+
+                    session_colors.push(colors[0])
+                    session_colors.push(colors[1])
+                    session_colors.push(colors[2])
                 }
 
                 if (data.number_of_players == 4) {
@@ -82,6 +111,11 @@ function create() {
                         { x: self.cameras.main.worldView.x + self.cameras.main.width / 2 - 300, y: y_position },
                         { x: self.cameras.main.worldView.x + self.cameras.main.width / 2 + 300, y: y_position }
                     ]
+
+                    session_colors.push(colors[0])
+                    session_colors.push(colors[1])
+                    session_colors.push(colors[2])
+                    session_colors.push(colors[3])
                 }
                     
                 if (data.number_of_players == 5) {
@@ -92,13 +126,19 @@ function create() {
                         { x: self.cameras.main.worldView.x + self.cameras.main.width / 2 + 200, y: y_position },
                         { x: self.cameras.main.worldView.x + self.cameras.main.width / 2 + 400, y: y_position }
                     ]
+
+                    session_colors.push(colors[0])
+                    session_colors.push(colors[1])
+                    session_colors.push(colors[2])
+                    session_colors.push(colors[3])
+                    session_colors.push(colors[4])
                 }
 
                 sessions[session] = {
                     max_players: data.number_of_players,
                     players: [],
                     positions: session_positions,
-                    colors: [...colors]
+                    colors: session_colors
                 };
 
                 addPlayerToSession(self, socket, session);
@@ -184,6 +224,7 @@ function removePlayerFromSession(self, socket, message) {
         }
         else {
             sessions[session].positions.push({ x: players[socket.id].position.x, y: players[socket.id].position.y });
+            sessions[session].colors.push(players[socket.id].color);
 
             io.to('session-' + session).emit('message', message);
             io.to('session-' + session).emit('currentPlayers', sessions[session].players);

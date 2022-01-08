@@ -17,7 +17,7 @@ var config = {
     type: Phaser.AUTO,
     width: 1600,
     height: 768,
-    backgroundColor: '#3a7e97',
+    backgroundColor: '#2e3436',
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
@@ -32,8 +32,8 @@ var config = {
         MainMenuScene,
         CreateSessionScene,
         JoinSessionScene,
-        LeaveSessionScene,
-        GameScene
+        GameScene,
+        LeaveSessionScene
     ],
     plugins: {
         global: [

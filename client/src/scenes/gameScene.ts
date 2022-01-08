@@ -1,9 +1,9 @@
 import * as Phaser from 'phaser';
 import InputText from 'phaser3-rex-plugins/plugins/inputtext.js';
 
-import * as background from './../assets/images/background.png'
+/* import * as background from './../assets/images/background.png' */
 //import * as racing_mp3 from './../assets/audio/racing.mp3'
-/* import * as race_car from './../assets/images/race_car.png' */
+import * as player_sprite from './../assets/images/player.png'
 
 import { Player } from '../gameObjects/player/player';
 
@@ -29,7 +29,7 @@ export class GameScene extends Phaser.Scene {
     private gameManager: any;
     private players: any;
 
-    public background: Phaser.GameObjects.TileSprite;
+    /* public background: Phaser.GameObjects.TileSprite; */
 
     private keyW: Phaser.Input.Keyboard.Key;
     private keyA: Phaser.Input.Keyboard.Key;
@@ -43,8 +43,8 @@ export class GameScene extends Phaser.Scene {
     }
 
     preload(): void {
-        this.load.image('background', background);
-        /* this.load.image('player', race_car); */
+        /* this.load.image('background', background); */
+        this.load.image('player', player_sprite);
         //this.load.audio('music', [music]);
 
         // KEYS
@@ -62,7 +62,7 @@ export class GameScene extends Phaser.Scene {
 
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
 
-        this.background = this.add.tileSprite(0, 0, 1600, 768, 'background').setOrigin(0);
+        /* this.background = this.add.tileSprite(0, 0, 1600, 768, 'background').setOrigin(0); */
 
         this.add.text(30, 30, 'Session:', { font: '22px Calibri' });
 
@@ -109,8 +109,8 @@ export class GameScene extends Phaser.Scene {
 
 
         this.input.keyboard.on('keydown-ESC', () => {
-            this.scene.pause('GameScene');
             this.scene.launch('LeaveSessionScene');
+            this.scene.pause('GameScene');
         }, this);
 /*
         this.events.on('pause', () => {
@@ -129,9 +129,6 @@ export class GameScene extends Phaser.Scene {
 
     update(time, delta): void {
 
-        if (this.keyA?.isDown) {
-            this.gameManager.players[this.gameManager.socket.id].speed
-        }
     }
 
     displayPlayer(playerInfo, playerType) {
